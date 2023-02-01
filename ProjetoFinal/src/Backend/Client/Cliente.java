@@ -7,6 +7,12 @@ public class Cliente implements Usuarios {
     
     private ContaCorrente conta_corrente;
     private ContaPoupanca conta_poupanca;
+    /**
+     * 0 - Off
+     * 1 - Conta Corrente
+     * 2 - Conta poupança
+     */
+    private int conta_selecionada = 0;
 
     private String nome;
     private String cpf;
