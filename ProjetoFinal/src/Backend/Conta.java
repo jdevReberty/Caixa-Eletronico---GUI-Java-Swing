@@ -12,15 +12,6 @@ public abstract class Conta {
     private double saldo;
     private String conta;
     private String senha;
-    public void depositar(String conta, double valor) {
-        
-    }
-    public void sacar(String senha, double valor) {
-        
-    }
-    public void transferir(String conta, double valor) {
-        
-    }
 
     public Conta(double saldo, String conta, String senha) {
         this.saldo = saldo;
