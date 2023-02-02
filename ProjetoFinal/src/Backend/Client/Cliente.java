@@ -18,6 +18,22 @@ public class Cliente implements Usuarios {
     private String cpf;
     private String data_nascimento;
 
+    public ContaCorrente getContaCorrente() {
+        return conta_corrente;
+    }
+
+    public void setConta_corrente(ContaCorrente conta_corrente) {
+        this.conta_corrente = conta_corrente;
+    }
+
+    public ContaPoupanca getConta_poupanca() {
+        return conta_poupanca;
+    }
+
+    public void setConta_poupanca(ContaPoupanca conta_poupanca) {
+        this.conta_poupanca = conta_poupanca;
+    }
+    
     public void setNome(String nome){
         this.nome = nome;
     }

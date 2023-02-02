@@ -9,6 +9,7 @@ package Backend;
  * @author sucod
  */
 public abstract class Conta {
+    public int tipo = 0;
     private double saldo;
     private String conta;
     private String senha;

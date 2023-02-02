@@ -12,6 +12,7 @@ public class ContaPoupanca extends Conta {
 
     public ContaPoupanca(double saldo, String conta, String senha) {
         super(saldo, conta, senha);
+        this.tipo = 2;
     }
     
 }
