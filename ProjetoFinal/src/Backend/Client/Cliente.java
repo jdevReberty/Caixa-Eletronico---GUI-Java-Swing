@@ -69,6 +69,22 @@ public class Cliente implements Usuarios {
         this.conta_poupanca = new ContaPoupanca(saldo, conta, senha);
     }
 
+    public ContaCorrente getContaCorrente() {
+        return conta_corrente;
+    }
+
+    public void setContaCorrente(ContaCorrente conta_corrente) {
+        this.conta_corrente = conta_corrente;
+    }
+
+    public ContaPoupanca getContaPoupanca() {
+        return conta_poupanca;
+    }
+
+    public void setContaPoupanca(ContaPoupanca conta_poupanca) {
+        this.conta_poupanca = conta_poupanca;
+    }
+
     public static List<Cliente> criarVetorCliente() {
         List<Cliente> listaCliente = new ArrayList();
         Cliente cliente01 = new Cliente("Marivelma", "123.456.789-10", "15/02/1965");
