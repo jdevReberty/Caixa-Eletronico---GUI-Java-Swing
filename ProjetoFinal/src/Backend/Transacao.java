@@ -19,19 +19,21 @@ public class Transacao {
         return this.cliente;
     }
 
-    public void depositar(List<Cliente> listaCliente, String conta, double valor, int tipo) {
-       Cliente clienteSele = null; 
-        if (tipo == 1) {
+    /* -------------------------------------------------------------------------- */
+    /*                             Bloco de Depositar                             */
+    /* -------------------------------------------------------------------------- */
+    public void depositar(List<Cliente> listaCliente, String conta, double valor) {
+        Cliente clienteSele = null; 
+        try {
             clienteSele = checarClienteContaCorrente(listaCliente, conta, valor);
             if (clienteSele != null) {
                 clienteSele.getContaCorrente().sumSaldo(valor);
+            } else {
+                throw new NullPointerException("Conta não encontrada!");
             }
-        } else if (tipo == 2) {
-            clienteSele = checarClienteContaPoupanca(listaCliente, conta, valor);
-            if (clienteSele != null) {
-                clienteSele.getContaPoupanca().sumSaldo(valor);
-            }
-        } 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Cliente checarClienteContaCorrente(List<Cliente> listaCliente, String conta, double valor) { 
@@ -42,41 +44,84 @@ public class Transacao {
         }
         return null;
     }
-    public Cliente checarClienteContaPoupanca(List<Cliente> listaCliente, String conta, double valor) { 
-        for(Cliente cliente : listaCliente) {
-            if(cliente.getContaPoupanca().getConta().equals(conta)) {
-                return cliente;
-            }
-        }
-        return null;
-    }
 
-    public void sacar(Cliente cliente, double valor, int tipo) {
+    /* -------------------------------------------------------------------------- */
+    /*                               Bloco de Sacar                               */
+    /* -------------------------------------------------------------------------- */
+    public void sacar(Cliente cliente, double valor) {
         this.setCliente(cliente);
-        if (tipo == 1) {
+        try {
             if (this.cliente.getContaCorrente().getSaldo() >= valor) {
                 this.cliente.getContaCorrente().subSaldo(valor);
+            } else {
+                throw new ArithmeticException("Saldo Insuficiente!");
             }
-        } else if( tipo == 2) {
-            if (this.cliente.getContaPoupanca().getSaldo() >= valor) {
-                this.cliente.getContaPoupanca().subSaldo(valor);
-            }
-        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }        
     }
-    public void transferir(List<Cliente> listaCliente, Cliente cliente, String conta, double valor, int tipo) {
+
+    /* -------------------------------------------------------------------------- */
+    /*           Bloco de Transferir Conta corrente para conta corrente           */
+    /* -------------------------------------------------------------------------- */
+    public void transferir(List<Cliente> listaCliente, Cliente cliente, String conta, double valor) {
         this.setCliente(cliente);
-        for (Cliente clienteTransferencia : listaCliente) {
-            if (tipo == 1) {
+        try {
+            Cliente clienteFinal = null;
+
+            for (Cliente clienteTransferencia : listaCliente) {
                 if (clienteTransferencia.getContaCorrente().getConta().equals(conta)) {
-                    clienteTransferencia.getContaCorrente().sumSaldo(valor);
-                    cliente.getContaCorrente().subSaldo(valor);
-                }
-            } else if (tipo == 2) {
-                if (clienteTransferencia.getContaPoupanca().getConta().equals(conta)) {
-                    clienteTransferencia.getContaPoupanca().sumSaldo(valor);
-                    clienteTransferencia.getContaPoupanca().subSaldo(valor);
+                    clienteFinal = clienteTransferencia;
+                    break;
                 }
             }
+
+            if(clienteFinal == null) {
+                throw new NullPointerException("Cliente não encontrado");
+            } 
+
+            clienteFinal.getContaCorrente().sumSaldo(valor);
+            cliente.getContaCorrente().subSaldo(valor);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }   
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                            *Guardar e resgatar*                            */
+    /* -------------------------------------------------------------------------- */
+    public void guardar(Cliente cliente, double valor) {
+        try {
+            if(cliente.getContaPoupanca().getSaldo() == 0) {
+                throw new ArithmeticException("Não há saldo para resgatar");
+            }
+
+            if(cliente.getContaPoupanca().getSaldo() >= valor) {
+                cliente.getContaPoupanca().subSaldo(valor);
+                cliente.getContaCorrente().sumSaldo(valor);
+            } else {
+                throw new ArithmeticException("O valor solicitado é superior ao saldo!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+    }
+
+    public void resgatar(Cliente cliente, double valor) {
+        try {
+            if(cliente.getContaCorrente().getSaldo() == 0) {
+                throw new ArithmeticException("Não há saldo para guardar");
+            }
+
+            if(cliente.getContaCorrente().getSaldo() >= valor) {
+                cliente.getContaCorrente().subSaldo(valor);
+                cliente.getContaPoupanca().sumSaldo(valor);
+            } else {
+                throw new ArithmeticException("O valor solicitado é superior ao saldo!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
