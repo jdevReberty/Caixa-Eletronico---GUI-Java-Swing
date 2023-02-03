@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/sucod/Desktop/ProjetoFinal/src/Backend/ContaPoupanca.java</file>
-            <file>file:/C:/Users/sucod/Desktop/ProjetoFinal/src/Backend/ContaCorrente.java</file>
-            <file>file:/C:/Users/sucod/Desktop/ProjetoFinal/src/Frontend/Login.java</file>
-            <file>file:/C:/Users/sucod/Desktop/ProjetoFinal/src/Backend/Conta.java</file>
-            <file>file:/C:/Users/sucod/Desktop/ProjetoFinal/src/Frontend/TelaPrincipal.java</file>
+            <file>file:/C:/Users/sucod/Desktop/ProjetoFinalClone/ProjetoPOO/ProjetoFinal/src/Backend/Transacao.java</file>
+            <file>file:/C:/Users/sucod/Desktop/ProjetoFinalClone/ProjetoPOO/ProjetoFinal/src/Backend/Conta.java</file>
+            <file>file:/C:/Users/sucod/Desktop/ProjetoFinalClone/ProjetoPOO/ProjetoFinal/src/Backend/Client/Cliente.java</file>
+            <file>file:/C:/Users/sucod/Desktop/ProjetoFinalClone/ProjetoPOO/ProjetoFinal/src/teste.java</file>
         </group>
     </open-files>
 </project-private>

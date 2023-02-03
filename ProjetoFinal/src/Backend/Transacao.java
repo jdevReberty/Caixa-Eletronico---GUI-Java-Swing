@@ -51,10 +51,32 @@ public class Transacao {
         return null;
     }
 
-    public void sacar(Cliente cliente, double valor) {
+    public void sacar(Cliente cliente, double valor, int tipo) {
         this.setCliente(cliente);
+        if (tipo == 1) {
+            if (this.cliente.getContaCorrente().getSaldo() >= valor) {
+                this.cliente.getContaCorrente().subSaldo(valor);
+            }
+        } else if( tipo == 2) {
+            if (this.cliente.getContaPoupanca().getSaldo() >= valor) {
+                this.cliente.getContaPoupanca().subSaldo(valor);
+            }
+        }
     }
-    public void transferir(Cliente[] listaCliente, Cliente cliente, String conta, double valor) {
+    public void transferir(List<Cliente> listaCliente, Cliente cliente, String conta, double valor, int tipo) {
         this.setCliente(cliente);
+        for (Cliente clienteTransferencia : listaCliente) {
+            if (tipo == 1) {
+                if (clienteTransferencia.getContaCorrente().getConta().equals(conta)) {
+                    clienteTransferencia.getContaCorrente().sumSaldo(valor);
+                    cliente.getContaCorrente().subSaldo(valor);
+                }
+            } else if (tipo == 2) {
+                if (clienteTransferencia.getContaPoupanca().getConta().equals(conta)) {
+                    clienteTransferencia.getContaPoupanca().sumSaldo(valor);
+                    clienteTransferencia.getContaPoupanca().subSaldo(valor);
+                }
+            }
+        }
     }
 }
