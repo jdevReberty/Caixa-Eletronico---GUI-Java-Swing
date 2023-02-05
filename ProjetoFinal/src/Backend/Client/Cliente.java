@@ -20,7 +20,9 @@ public class Cliente implements Usuarios {
     private String nome;
     private String cpf;
     private String data_nascimento;
-
+    
+    public Cliente() {}
+    
     public Cliente(String nome, String cpf, String data_nascimento) {
         this.setNome(nome);
         this.setCpf(cpf);
