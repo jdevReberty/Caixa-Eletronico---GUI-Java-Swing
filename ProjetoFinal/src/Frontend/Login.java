@@ -21,7 +21,7 @@ public class Login extends javax.swing.JFrame {
     public static List<Cliente> listaCliente;
     
     public void inicializarHome() {
-        Principal principal = new Principal();
+        Principal principal = new Principal(cliente);
         
 //        principal;
         principal.setVisible(true);
