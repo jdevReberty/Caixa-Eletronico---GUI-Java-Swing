@@ -2,6 +2,7 @@ package Frontend;
 
 import java.util.List;
 import Backend.Client.Cliente;
+import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,17 +13,17 @@ import Backend.Client.Cliente;
  *
  * @author Digim
  */
-public class Depositar extends javax.swing.JFrame {
+public class Transferir extends javax.swing.JFrame {
     
     Cliente cliente;
-    public Depositar(Cliente cliente) {
+    public Transferir(Cliente cliente) {
         initComponents();
         this.cliente = cliente;
         jLSaldo.setText(String.valueOf(cliente.getContaCorrente().getSaldo()));
         jLSaldoPrincipal.setText("Saldo R$ "+String.valueOf((cliente.getContaCorrente().getSaldo())));
         jLClienteNome.setText(cliente.getNome());
     }
-    public Depositar() {
+    public Transferir() {
         initComponents();
     }
 
@@ -113,13 +114,13 @@ public class Depositar extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Home > Depositar");
+        jLabel7.setText("Home > Sacar");
 
         jLabel8.setText("Saldo disponivél");
 
         jLSaldo.setText("R$ 3250");
 
-        jLabel10.setText("Valor esperado do deposito");
+        jLabel10.setText("Valor esperado do saque:");
 
         jLabel11.setText("Senha");
 
@@ -232,9 +233,13 @@ public class Depositar extends javax.swing.JFrame {
             double valor = Double.parseDouble(jTFValorEsperado.getText());
             String senha = String.valueOf(JPSenha.getPassword());
             if (senha.equals(cliente.getContaCorrente().getSenha())) {
-                cliente.getContaCorrente().sumSaldo(valor);
-                jLSaldo.setText("R$ "+String.valueOf(cliente.getContaCorrente().getSaldo()));
-                jLSaldoPrincipal.setText("Saldo R$ "+String.valueOf((cliente.getContaCorrente().getSaldo())));
+               if (cliente.getContaCorrente().getSaldo() > 0 && cliente.getContaCorrente().getSaldo() >= valor) {
+                    cliente.getContaCorrente().subSaldo(valor);
+                    jLSaldo.setText("R$ "+String.valueOf(cliente.getContaCorrente().getSaldo()));
+                    jLSaldoPrincipal.setText("Saldo R$ "+String.valueOf((cliente.getContaCorrente().getSaldo())));
+               } else {
+                   JOptionPane.showConfirmDialog(this, "Valor acima do saldo disponível!");
+               }
                 
 
             } else {
@@ -272,20 +277,51 @@ public class Depositar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transferir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transferir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transferir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Transferir.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Depositar().setVisible(true);
+                new Transferir().setVisible(true);
             }
         });
     }

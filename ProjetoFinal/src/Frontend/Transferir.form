@@ -215,7 +215,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Home &gt; Depositar"/>
+        <Property name="text" type="java.lang.String" value="Home &gt; Sacar"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
@@ -230,7 +230,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Valor esperado do deposito"/>
+        <Property name="text" type="java.lang.String" value="Valor esperado do saque:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
