@@ -76,7 +76,7 @@ public class Cliente implements Usuarios {
 
     public void cadastrarConta(double saldo, String contaCorrente, String contaPoupanca, String senha) {
         implementarContaCorrente(saldo, contaCorrente, senha);
-        implementarContaPoupanca(saldo, contaPoupanca, senha);
+        implementarContaPoupanca(0, contaPoupanca, senha);
     }
 
     public void implementarContaCorrente(double saldo, String conta, String senha) {
