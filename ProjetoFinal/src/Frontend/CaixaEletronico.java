@@ -20,29 +20,45 @@ import javax.swing.JPanel;
 public class CaixaEletronico extends javax.swing.JFrame {
     
     Cliente cliente = new Cliente();
-    List<Cliente> listaCliente = Cliente.criarVetorCliente();
-    
-    Login login = new Login();
+    List<Cliente> listaCliente;
 
-    
+ 
     public boolean inicializarLogin() {
-        if(login == null) {
-            login = new Login();
-        }
+        Login login = new Login(listaCliente);
+        
         login.setLocationRelativeTo(null);
         login.setVisible(true);
-        login.listaCliente = listaCliente;
         
         return true;
     }
     
     public CaixaEletronico() {
         initComponents();
-        System.out.println("fechando....");
+        this.listaCliente = Cliente.criarVetorCliente();
         inicializarLogin();
-//        setSize(320, 377);
-//        testando();
-
+    }
+    
+    public static boolean checaExisteCliente(List<Cliente> listaClientes, String conta) {
+        for(Cliente clienteAtual : listaClientes) {
+            if(clienteAtual.getContaCorrente().getConta().equals(conta)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public static List<Cliente> atualizaValoresClienteLogado(List<Cliente> listaClientes, Cliente clienteLogado) {
+        String contaClienteLogado = clienteLogado.getContaCorrente().getConta();
+        
+        for(Cliente clienteAtual : listaClientes) {
+            if(clienteAtual.getContaCorrente().getConta().equals(contaClienteLogado)) {
+                clienteAtual.getContaCorrente().setSaldo(clienteLogado.getContaCorrente().getSaldo());
+                clienteAtual.getContaPoupanca().setSaldo(clienteLogado.getContaPoupanca().getSaldo());
+                break;
+            }
+        }
+        
+        return listaClientes;
     }
 
     /**

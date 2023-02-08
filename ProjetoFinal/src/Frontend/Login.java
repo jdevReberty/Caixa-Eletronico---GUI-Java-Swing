@@ -21,7 +21,8 @@ public class Login extends javax.swing.JFrame {
     public static List<Cliente> listaCliente;
     
     public void inicializarHome() {
-        Principal principal = new Principal(cliente);
+        
+        Principal principal = new Principal(cliente, listaCliente);
         
 //        principal;
         principal.setVisible(true);
@@ -32,8 +33,9 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Login(List<Cliente> listaClientes) {
         initComponents();
+        this.listaCliente = listaClientes;
     }
 
     /**
@@ -194,7 +196,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Login(listaCliente).setVisible(true);
             }
         });
     }

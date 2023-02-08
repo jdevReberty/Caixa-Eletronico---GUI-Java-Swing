@@ -15,9 +15,12 @@ import Backend.Client.Cliente;
 public class Depositar extends javax.swing.JFrame {
     
     Cliente cliente;
-    public Depositar(Cliente cliente) {
+    List<Cliente> listaCliente;
+    
+    public Depositar(Cliente cliente, List<Cliente> listaClientes) {
         initComponents();
         this.cliente = cliente;
+        this.listaCliente = listaClientes;
         jLSaldo.setText(String.valueOf(cliente.getContaCorrente().getSaldo()));
         jLSaldoPrincipal.setText("Saldo R$ "+String.valueOf((cliente.getContaCorrente().getSaldo())));
         jLClienteNome.setText(cliente.getNome());
@@ -248,8 +251,8 @@ public class Depositar extends javax.swing.JFrame {
     private void jBtnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVoltarActionPerformed
         try {
             this.dispose();
-        Principal principal = new Principal(cliente);
-        principal.setVisible(true);
+            Principal principal = new Principal(cliente, listaCliente);
+            principal.setVisible(true);
         } catch (Exception e) {
             
         }
