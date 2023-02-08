@@ -1,6 +1,8 @@
 package Frontend;
 
 import Backend.Client.Cliente;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -15,8 +17,8 @@ import java.util.List;
  */
 public class Extrato extends javax.swing.JFrame {
 
-    public static Cliente cliente;
-    public static List<Cliente> listaCliente;
+    public Cliente cliente;
+    public List<Cliente> listaCliente;
     
     /**
      * Creates new form Home
@@ -24,15 +26,25 @@ public class Extrato extends javax.swing.JFrame {
     public Extrato() {
         initComponents();
     }
-    public Extrato(Cliente cliente) {
+    
+    public Extrato(Cliente cliente, List<Cliente> listaClientes) {
         initComponents();
         this.cliente = cliente;
+        this.listaCliente = listaClientes;
+        
+        String DataAtual = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date());
+        
+        jLDataEmissao.setText(DataAtual);
+        
         jLNomeCliente.setText(this.cliente.getNome());
-        jLSaldo.setText("Saldo R$ "+String.valueOf(this.cliente.getContaCorrente().getSaldo()));
-        jLNome.setText("Nome: "+this.cliente.getNome());
-        jLCPF.setText("CPF: "+this.cliente.getCpf()+" Data de nascimento: "+this.cliente.getDataNascimento());
-        jLSaldoPoupanca.setText("Saldo corrente R$ "+String.valueOf(this.cliente.getContaPoupanca().getSaldo()));
-        jLSaldoCorrente.setText("Saldo poupança R$ "+String.valueOf(this.cliente.getContaCorrente().getSaldo()));
+        jLCPF.setText(this.cliente.getCpf());
+        jLDataNascimento.setText(this.cliente.getDataNascimento());
+        
+        jLNumeroContaCorrente.setText(cliente.getContaCorrente().getConta());
+        jLSaldoCorrente.setText(String.valueOf(cliente.getContaCorrente().getSaldo()));
+        
+        jLNumeroContaPoupanca.setText(cliente.getContaPoupanca().getConta());
+        jLSaldoPoupanca.setText(String.valueOf(cliente.getContaPoupanca().getSaldo()));
     }
 
     /**
@@ -46,15 +58,29 @@ public class Extrato extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLNomeCliente = new javax.swing.JLabel();
-        jLSaldo = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLNome = new javax.swing.JLabel();
+        jLDataEmissao = new javax.swing.JLabel();
+        jLabelContaCorrente = new javax.swing.JLabel();
         jLSaldoCorrente = new javax.swing.JLabel();
+        jLabelSaldoCorrente = new javax.swing.JLabel();
+        jLabelContaPoupanca = new javax.swing.JLabel();
+        jLabelSaldoPoupanca = new javax.swing.JLabel();
         jLSaldoPoupanca = new javax.swing.JLabel();
+        jLNomeCliente = new javax.swing.JLabel();
+        jLabelCpf = new javax.swing.JLabel();
+        jLNomeCliente2 = new javax.swing.JLabel();
+        jLDadosBancarios = new javax.swing.JLabel();
+        jLDadosPessoais = new javax.swing.JLabel();
+        jLabelNumeroCorrente = new javax.swing.JLabel();
+        jLNumeroContaCorrente = new javax.swing.JLabel();
+        jLSaldoCorrente4 = new javax.swing.JLabel();
+        jLNumeroContaPoupanca = new javax.swing.JLabel();
+        jLNomeCliente5 = new javax.swing.JLabel();
         jLCPF = new javax.swing.JLabel();
-        JBtnSair = new javax.swing.JButton();
+        jLDataNascimento = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jBtnVoltar = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -62,118 +88,215 @@ public class Extrato extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLNomeCliente.setText("Roberval da Silva");
+        jPanel2.setBackground(new java.awt.Color(255, 255, 153));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 247, 130), 2, true));
 
-        jLSaldo.setText("Saldo R$ 3250");
+        jLDataEmissao.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLDataEmissao.setText("xx/xx/xxxx");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLNomeCliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLNomeCliente)
-                    .addComponent(jLSaldo))
-                .addContainerGap())
-        );
+        jLabelContaCorrente.setText("Conta Corrente:");
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jLSaldoCorrente.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLSaldoCorrente.setText("0");
 
-        jLNome.setText("Venha Conhecer!");
+        jLabelSaldoCorrente.setText("R$");
 
-        jLSaldoCorrente.setText("Melhores fundos e CDB's para se investir em 2023. ");
+        jLabelContaPoupanca.setText("Conta Poupança:");
 
-        jLSaldoPoupanca.setText("Melhores fundos e CDB's para se investir em 2023. ");
+        jLabelSaldoPoupanca.setText("R$");
 
-        jLCPF.setText("Venha Conhecer!");
+        jLSaldoPoupanca.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLSaldoPoupanca.setText("0");
+
+        jLNomeCliente.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLNomeCliente.setText("Nome do Cliente");
+
+        jLabelCpf.setText("CPF:");
+
+        jLNomeCliente2.setText("Data de Nascimento: ");
+
+        jLDadosBancarios.setText("________________ Dados Bancários ________________");
+
+        jLDadosPessoais.setText("_________________ Dados Pessoais _______________");
+
+        jLabelNumeroCorrente.setText("N°: ");
+
+        jLNumeroContaCorrente.setText("xxxxxx-x");
+
+        jLSaldoCorrente4.setText("N°: ");
+
+        jLNumeroContaPoupanca.setText("xxxxxx-x");
+
+        jLNomeCliente5.setText("JEW Banking - Extrato de saldo bancário");
+
+        jLCPF.setText("xxx.xxx.xxx-xx");
+
+        jLDataNascimento.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLDataNascimento.setText("xx/xx/xxxx");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLNome, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLSaldoCorrente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLSaldoPoupanca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLCPF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabelNumeroCorrente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLNumeroContaCorrente))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabelSaldoCorrente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLSaldoCorrente, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelContaCorrente, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabelSaldoPoupanca)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLSaldoPoupanca, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLSaldoCorrente4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLNumeroContaPoupanca))
+                            .addComponent(jLabelContaPoupanca, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLNomeCliente2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabelCpf)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLCPF))
+                            .addComponent(jLNomeCliente5)
+                            .addComponent(jLDadosBancarios))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLDataEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLNomeCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLDadosPessoais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(20, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLNome, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLNomeCliente5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLSaldoCorrente)
+                .addComponent(jLDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLSaldoPoupanca)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLNomeCliente2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLDadosBancarios, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabelContaCorrente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelNumeroCorrente)
+                            .addComponent(jLNumeroContaCorrente))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLSaldoCorrente)
+                            .addComponent(jLabelSaldoCorrente)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabelContaPoupanca)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLSaldoCorrente4)
+                            .addComponent(jLNumeroContaPoupanca))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLSaldoPoupanca)
+                            .addComponent(jLabelSaldoPoupanca))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(jLDataEmissao, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        JBtnSair.setBackground(new java.awt.Color(204, 204, 255));
-        JBtnSair.setText("Sair");
-        JBtnSair.addActionListener(new java.awt.event.ActionListener() {
+        jLabel7.setText("Home > Extrato");
+
+        jBtnVoltar.setBackground(new java.awt.Color(204, 204, 204));
+        jBtnVoltar.setText("Voltar");
+        jBtnVoltar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 123, 255), 3, true));
+        jBtnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBtnSairActionPerformed(evt);
+                jBtnVoltarActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(20, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBtnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(JBtnSair, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(JBtnSair)
-                .addContainerGap(13, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JBtnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBtnSairActionPerformed
+    private void jBtnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVoltarActionPerformed
         try {
             this.dispose();
-            Principal principal = new Principal(cliente);
+            Principal principal = new Principal(cliente, listaCliente);
             principal.setVisible(true);
         } catch (Exception e) {
             
         }
-    }//GEN-LAST:event_JBtnSairActionPerformed
+    }//GEN-LAST:event_jBtnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,16 +337,30 @@ public class Extrato extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JBtnSair;
+    private javax.swing.JButton jBtnVoltar;
     private javax.swing.JLabel jLCPF;
-    private javax.swing.JLabel jLNome;
+    private javax.swing.JLabel jLDadosBancarios;
+    private javax.swing.JLabel jLDadosPessoais;
+    private javax.swing.JLabel jLDataEmissao;
+    private javax.swing.JLabel jLDataNascimento;
     private javax.swing.JLabel jLNomeCliente;
-    private javax.swing.JLabel jLSaldo;
+    private javax.swing.JLabel jLNomeCliente2;
+    private javax.swing.JLabel jLNomeCliente5;
+    private javax.swing.JLabel jLNumeroContaCorrente;
+    private javax.swing.JLabel jLNumeroContaPoupanca;
     private javax.swing.JLabel jLSaldoCorrente;
+    private javax.swing.JLabel jLSaldoCorrente4;
     private javax.swing.JLabel jLSaldoPoupanca;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelContaCorrente;
+    private javax.swing.JLabel jLabelContaPoupanca;
+    private javax.swing.JLabel jLabelCpf;
+    private javax.swing.JLabel jLabelNumeroCorrente;
+    private javax.swing.JLabel jLabelSaldoCorrente;
+    private javax.swing.JLabel jLabelSaldoPoupanca;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }
