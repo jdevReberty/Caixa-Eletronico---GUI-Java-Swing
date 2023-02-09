@@ -3,6 +3,7 @@ package Frontend;
 import Backend.AuthLogin;
 import Backend.Client.Cliente;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -160,17 +161,18 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String cpf = campoCPF.getText();
-        String senha = String.valueOf(campoSenha.getPassword());
-        cliente = AuthLogin.autenticar(listaCliente, cpf, senha);
-        
         try {
+            String cpf = campoCPF.getText();
+            String senha = String.valueOf(campoSenha.getPassword());
+            cliente = AuthLogin.autenticar(listaCliente, cpf, senha);
             if(cliente == null) {
                 throw new NullPointerException("CPF ou senha incorretos!");
             }
+            
             this.dispose();
             inicializarHome();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
