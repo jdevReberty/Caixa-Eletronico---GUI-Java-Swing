@@ -9,9 +9,7 @@ package Backend;
  * @author sucod
  */
 public class ContaCorrente extends Conta {
-
     public ContaCorrente(double saldo, String conta, String senha) {
         super(saldo, conta, senha);
     }
-    
 }

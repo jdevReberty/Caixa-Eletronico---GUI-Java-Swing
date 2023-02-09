@@ -9,18 +9,10 @@ package Backend;
  * @author sucod
  */
 public abstract class Conta {
+    public int tipo = 0;
     private double saldo;
     private String conta;
     private String senha;
-    public void depositar(String conta, double valor) {
-        
-    }
-    public void sacar(String senha, double valor) {
-        
-    }
-    public void transferir(String conta, double valor) {
-        
-    }
 
     public Conta(double saldo, String conta, String senha) {
         this.saldo = saldo;
@@ -28,7 +20,6 @@ public abstract class Conta {
         this.senha = senha;
     }
     
-
     public double getSaldo() {
         return saldo;
     }
@@ -52,5 +43,14 @@ public abstract class Conta {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
+
+    public void sumSaldo(double saldo) {
+        double novo_saldo = this.getSaldo() + saldo;
+        this.setSaldo(novo_saldo);
+    }
+       
+    public void subSaldo (double saldo) {
+        double novo_saldo = this.getSaldo() - saldo;
+        this.setSaldo(novo_saldo);
+    }
 }
