@@ -15,7 +15,6 @@ public class Cliente implements Usuarios {
      * 1 - Conta Corrente
      * 2 - Conta poupança
      */
-    private int conta_selecionada = 0;
 
     private String nome;
     private String cpf;
@@ -101,5 +100,19 @@ public class Cliente implements Usuarios {
         listaCliente.add(cliente03);
 
         return listaCliente;
+    }
+
+    public static List<Cliente> updateList(List<Cliente> listaClientes, Cliente clienteLogado) {
+        String contaClienteLogado = clienteLogado.getContaCorrente().getConta();
+        
+        for(Cliente clienteAtual : listaClientes) {
+            if(clienteAtual.getContaCorrente().getConta().equals(contaClienteLogado)) {
+                clienteAtual.getContaCorrente().setSaldo(clienteLogado.getContaCorrente().getSaldo());
+                clienteAtual.getContaPoupanca().setSaldo(clienteLogado.getContaPoupanca().getSaldo());
+                break;
+            }
+        }
+        
+        return listaClientes;
     }
 }

@@ -2,6 +2,8 @@ package Frontend;
 
 import java.util.List;
 import Backend.Client.Cliente;
+import Backend.Response.ResponseCliente;
+import Backend.Transacao;
 import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,20 +15,22 @@ import javax.swing.JOptionPane;
  *
  * @author Digim
  */
-public class Depositar extends javax.swing.JFrame {
+public class Sacar extends javax.swing.JFrame {
     
     Cliente cliente;
     List<Cliente> listaCliente;
+    private Transacao transacao;
     
-    public Depositar(Cliente cliente, List<Cliente> listaClientes) {
+    public Sacar(Cliente cliente, List<Cliente> listaClientes) {
         initComponents();
+        this.transacao = new Transacao();
         this.cliente = cliente;
         this.listaCliente = listaClientes;
         jLNomeCliente.setText(this.cliente.getNome());
         jLSaldoCorrente.setText(String.valueOf(this.cliente.getContaCorrente().getSaldo()));        
         jLSaldoPoupanca.setText(String.valueOf(this.cliente.getContaPoupanca().getSaldo()));
     }
-    public Depositar() {
+    public Sacar() {
         initComponents();
     }
 
@@ -108,7 +112,7 @@ public class Depositar extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLNomeCliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabelPoupanca)
@@ -138,7 +142,7 @@ public class Depositar extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel7.setText("Home > Depositar");
+        jLabel7.setText("Home > Sacar");
 
         jTFValorEsperado.setMaximumSize(new java.awt.Dimension(32767, 32767));
         jTFValorEsperado.addActionListener(new java.awt.event.ActionListener() {
@@ -208,7 +212,7 @@ public class Depositar extends javax.swing.JFrame {
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JPSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnVoltar))
@@ -237,27 +241,6 @@ public class Depositar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JPSenhaActionPerformed
 
-    private void jBtnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFinalizarActionPerformed
-        try {
-            double valorDeposito = Double.parseDouble(jTFValorEsperado.getText());
-            String senhaInformada = String.valueOf(JPSenha.getPassword());
-            
-            if(!cliente.getContaCorrente().getSenha().equals(senhaInformada)) {
-                throw new StringIndexOutOfBoundsException("Senha incorreta!");
-            }
-            
-            cliente.getContaCorrente().sumSaldo(valorDeposito);
-            listaCliente = CaixaEletronico.atualizaValoresClienteLogado(listaCliente, cliente);
-            
-            this.dispose();
-            Principal principal = new Principal(cliente, listaCliente);
-            principal.setVisible(true);
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }//GEN-LAST:event_jBtnFinalizarActionPerformed
-
     private void jBtnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnVoltarActionPerformed
         try {
             this.dispose();
@@ -267,6 +250,29 @@ public class Depositar extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_jBtnVoltarActionPerformed
+
+    private void jBtnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFinalizarActionPerformed
+        try {
+            double valorSaque = Double.parseDouble(jTFValorEsperado.getText());
+            String senhaInformada = String.valueOf(JPSenha.getPassword());
+
+            ResponseCliente response = transacao.sacar(this.cliente, valorSaque, senhaInformada);
+            
+            if(response.getStatus() != 200) {
+                throw new Exception(response.getException());
+            }
+            this.cliente = response.getCliente();
+            
+            listaCliente = Cliente.updateList(listaCliente, cliente);
+
+            this.dispose();
+            Principal principal = new Principal(cliente, listaCliente);
+            principal.setVisible(true);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_jBtnFinalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -285,14 +291,22 @@ public class Depositar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sacar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sacar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sacar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Depositar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sacar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -305,7 +319,7 @@ public class Depositar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Depositar().setVisible(true);
+                new Sacar().setVisible(true);
             }
         });
     }

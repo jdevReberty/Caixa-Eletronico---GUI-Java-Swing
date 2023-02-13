@@ -2,6 +2,8 @@ package Frontend;
 
 import java.util.List;
 import Backend.Client.Cliente;
+import Backend.Response.ResponseCliente;
+import Backend.Transacao;
 import javax.swing.JOptionPane;
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,9 +19,11 @@ public class Transferir extends javax.swing.JFrame {
     
     Cliente cliente;
     List<Cliente> listaCliente;
+    private Transacao transacao;
     
     public Transferir(Cliente cliente, List<Cliente> listaClientes) {
         initComponents();
+        this.transacao = new Transacao();
         this.cliente = cliente;
         this.listaCliente = listaClientes;
         jLNomeCliente.setText(this.cliente.getNome());
@@ -29,6 +33,10 @@ public class Transferir extends javax.swing.JFrame {
     
     public Transferir() {
         initComponents();
+    }
+    
+    public Transacao getTransacao() {
+        return this.transacao;
     }
 
     /**
@@ -265,32 +273,26 @@ public class Transferir extends javax.swing.JFrame {
 
     private void jBFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBFinalizarActionPerformed
         try {
+            //            double saldoDisponivel = cliente.getContaCorrente().getSaldo();
+
             boolean existeDestinatario = CaixaEletronico.checaExisteCliente(this.listaCliente, jTFContaDestinatario.getText());
-            double saldoDisponivel = cliente.getContaCorrente().getSaldo();
+            String destinatario = String.valueOf(jTFContaDestinatario.getText());
             double valorTransferencia = Double.parseDouble(jTFValor.getText());
             String senhaInformada = String.valueOf(JPSenha.getPassword());
             
-            if(existeDestinatario == false) {
-                throw new NullPointerException("Não foi encontrado um destinatário com a conta: " + jTFContaDestinatario.getText());
-            }
-            if(saldoDisponivel < valorTransferencia) {
-                throw new ArithmeticException("Saldo insuficiente!");
-            }
-            if(!cliente.getContaCorrente().getSenha().equals(senhaInformada)) {
-                throw new StringIndexOutOfBoundsException("Senha incorreta!");
-            }
+            ResponseCliente response = 
+                    this.transacao.transferir(this.listaCliente, this.cliente, 
+                            destinatario, senhaInformada, valorTransferencia);
             
-            for(Cliente destinatario : this.listaCliente) {
-                if(destinatario.getContaCorrente().getConta().equals(jTFContaDestinatario.getText())) {
-                    cliente.getContaCorrente().subSaldo(valorTransferencia);
-                    destinatario.getContaCorrente().sumSaldo(valorTransferencia);
-                    
-                    jLabelCorrente.setText( String.valueOf(cliente.getContaCorrente().getSaldo()) );
-                    break;
-                }
+            if(response.getStatus() != 200) {
+                throw new Exception(response.getException());
             }
+            this.cliente = response.getCliente();
+            this.listaCliente = response.getListaClientes();
             
-            listaCliente = CaixaEletronico.atualizaValoresClienteLogado(listaCliente, cliente);
+            jLabelCorrente.setText( String.valueOf(cliente.getContaCorrente().getSaldo()) );
+            
+//            listaCliente = CaixaEletronico.atualizaValoresClienteLogado(listaCliente, cliente);
             
             this.dispose();
             Principal principal = new Principal(cliente, listaCliente);

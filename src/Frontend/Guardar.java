@@ -6,6 +6,8 @@
 package Frontend;
 
 import Backend.Client.Cliente;
+import Backend.Response.ResponseCliente;
+import Backend.Transacao;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -17,9 +19,11 @@ public class Guardar extends javax.swing.JFrame {
     
     Cliente cliente;
     List<Cliente> listaCliente;
+    private Transacao transacao;
     
     public Guardar(Cliente cliente, List<Cliente> listaClientes) {
         initComponents();
+        this.transacao = new Transacao();
         this.cliente = cliente;
         this.listaCliente = listaClientes;
         jLNomeCliente.setText(this.cliente.getNome());
@@ -218,19 +222,14 @@ public class Guardar extends javax.swing.JFrame {
             double saldoDisponivel = cliente.getContaCorrente().getSaldo();
             double valorTransferencia = Double.parseDouble(jTFValor.getText());
             String senhaInformada = String.valueOf(JPSenha.getPassword());
-
-            if(saldoDisponivel < valorTransferencia) {
-                throw new ArithmeticException("Saldo insuficiente!");
-            }
             
-            if(!cliente.getContaCorrente().getSenha().equals(senhaInformada)) {
-                throw new StringIndexOutOfBoundsException("Senha incorreta!");
-            }
+            ResponseCliente response = transacao.guardar(this.cliente, valorTransferencia, senhaInformada);
             
-            cliente.getContaCorrente().subSaldo(valorTransferencia);
-            cliente.getContaPoupanca().sumSaldo(valorTransferencia);
-
-            listaCliente = CaixaEletronico.atualizaValoresClienteLogado(listaCliente, cliente);
+            if(response.getStatus() != 200) {
+                throw new Exception(response.getException());
+            }
+            this.cliente = response.getCliente();
+            listaCliente = Cliente.updateList(listaCliente, cliente);
 
             this.dispose();
             Principal principal = new Principal(cliente, listaCliente);
